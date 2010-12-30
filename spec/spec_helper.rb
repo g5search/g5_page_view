@@ -1,4 +1,4 @@
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib/page_view'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'rspec'
 require 'g5_page_view'
