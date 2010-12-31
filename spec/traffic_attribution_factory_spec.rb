@@ -9,12 +9,12 @@ describe TrafficAttributionFactory do
         :referring_url=>'http://google.com?cpm='+@cpm,
         :cpm=>@cpm
       )
-      TrafficAttributionFactory.stubs(:set_channel)
+      TrafficAttributionFactory.stub!(:set_channel)
     end
     
     context "with a campaign (cpm)" do
       it "retrieves the source from the cpm" do
-        Campaign.expects(:parse).with(@page_view.cpm).returns('google.com')
+        Campaign.should_receive(:parse).with(@page_view.cpm).and_return('google.com')
         TrafficAttributionFactory.update!(@page_view)
         @page_view.source.should eql('google.com')
       end
@@ -26,13 +26,13 @@ describe TrafficAttributionFactory do
         @engine= SearchEngine.new(:source_host=>'bing.com')
       end
       it "retrieves the search engine as the source when the request originated from a known search engine" do
-        TrafficAttributionFactory.expects(:search_engine).times(2).returns(@engine)
+        TrafficAttributionFactory.should_receive(:search_engine).times(2).and_return(@engine)
         TrafficAttributionFactory.update!(@page_view)
         @page_view.source.should eql('bing.com')        
       end
       it "retrieves the referring domain for the source" do
-        @page_view.stubs(:cpm).returns(nil)
-        TrafficAttributionFactory.stubs(:search_engine).returns(nil)
+        @page_view.stub!(:cpm).and_return(nil)
+        TrafficAttributionFactory.stub!(:search_engine).and_return(nil)
         TrafficAttributionFactory.update!(@page_view)
         @page_view.source.should eql(@page_view.referring_domain)                
       end
@@ -51,7 +51,7 @@ describe TrafficAttributionFactory do
   
   describe "Channels" do
     before(:each) do
-      TrafficAttributionFactory.stubs(:set_source)
+      TrafficAttributionFactory.stub!(:set_source)
       @page_view= PageView.new(
         :url=>'http://storquest.com',
         :referring_url=>'http://google.com'
@@ -70,9 +70,9 @@ describe TrafficAttributionFactory do
       end
       
       it "should set the channel to the first check that is met" do
-        TrafficAttributionFactory.expects(:paid?).returns(nil)
-        TrafficAttributionFactory.expects(:direct?).returns(@direct)
-        TrafficAttributionFactory.expects(:organic?).never
+        TrafficAttributionFactory.should_receive(:paid?).and_return(nil)
+        TrafficAttributionFactory.should_receive(:direct?).and_return(@direct)
+        TrafficAttributionFactory.should_receive(:organic?).never
         TrafficAttributionFactory.set_channel(@page_view)
         @page_view.channel.should eql(@direct)
       end

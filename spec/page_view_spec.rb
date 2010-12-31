@@ -20,7 +20,7 @@ describe PageView do
 
   context 'Attributing traffic to source,channel,campaign' do
     it "should attribute the traffic before saving" do
-      TrafficAttributionFactory.expects(:update!).with(@pv)
+      TrafficAttributionFactory.should_receive(:update!).with(@pv)
       @pv.save
     end
   end
@@ -28,7 +28,7 @@ describe PageView do
   context "date & time split" do
     before(:each) do
       @time_now = Time.now
-      Time.stubs(:now).returns(@time_now)
+      Time.stub!(:now).and_return(@time_now)
     end
 
     it "splits saved time into t as float and d as formatted date" do
