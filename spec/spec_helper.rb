@@ -9,6 +9,11 @@ require 'search_engine'
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
 RSpec.configure do |config|
+
+    config.before :all do
+      Seeds::SearchEngineSeed.execute
+    end
+
 	config.after :all do
 		Mongoid.master.collections.select {|c| c.name !~ /system/ }.each(&:drop)
 	end
