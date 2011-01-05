@@ -14,11 +14,11 @@ Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "g5_page_view"
   gem.homepage = "http://github.com/steveburkett/g5_page_view"
-  gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
-  gem.email = "steve.burkett@g5platform.com"
-  gem.authors = ["Steve Burkett"]
+  gem.license = "none"
+  gem.summary = "G5 page view"
+  gem.description = "Model for storage of page view details"
+  gem.email = "engineering@g5platform.com"
+  gem.authors = ["G5"]
   # Include your dependencies below. Runtime dependencies are required when using your gem,
   # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
   #  gem.add_runtime_dependency 'jabber4r', '> 0.1'
