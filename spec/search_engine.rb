@@ -10,7 +10,6 @@ module Seeds
         SearchEngine.new(:search_engine => "aol", :source_host => "search.aol.com", :keyword_param => "query").upsert
         SearchEngine.new(:search_engine => "msn", :source_host => "search.msn.com", :keyword_param => "q").upsert
         SearchEngine.new(:search_engine => "comcast", :source_host => "search.comcast.net", :keyword_param => "query").upsert
-
         SearchEngine.new(:search_engine => "superpages",  :source_host => "www.superpages.com").upsert
         SearchEngine.new(:search_engine => "localsearch", :source_host => "www.localsearch.com").upsert
         SearchEngine.new(:search_engine => 'facebook',    :source_host => 'www.facebook.com', :keyword_param=>'q', :campaign_rule=>'fb').upsert

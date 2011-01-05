@@ -1,5 +1,3 @@
-#TODO  configuration
-Mongoid.database = Mongo::Connection.new.db('gts_development')
 
 class PageView
   include Mongoid::Document

@@ -1,5 +1,9 @@
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib/page_view'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
+
+Bundler.require(:default, :test)
+Mongoid.database = Mongo::Connection.new.db('gts_test')
+
 require 'rspec'
 require 'g5_page_view'
 require 'search_engine'
