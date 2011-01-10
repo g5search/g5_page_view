@@ -1,18 +1,23 @@
 $LOAD_PATH.unshift(File.dirname(__FILE__))
-require 'mongoid'
-require 'page_view/page_view'
-require 'page_view/search_engine'
-require 'page_view/campaign'
-require 'page_view/traffic_attribution_factory'
 
 module G5PageView
 
-  def configure
-    config = Mongoid::Config.instance
-    block_given ? yield(config) : config
-  end
+  class << self
 
-  alias :config :configure
+    def configure
+      require 'mongoid'
+      config = Mongoid::Config.instance
+      block_given? ? yield(config) : config
+      Dir["#{File.dirname(__FILE__)}/page_view/*.rb"].each {|f| require f}
+
+      # require 'page_view/page_view'
+      # require 'page_view/search_engine'
+      # require 'page_view/campaign'
+      # require 'page_view/traffic_attribution_factory'
+    end
+
+    alias :config :configure
+  end
 
   Mongoid::Config.public_instance_methods(false).each do |name|
     (class << self; self; end).class_eval <<-EOT
@@ -21,6 +26,5 @@ module G5PageView
       end
     EOT
   end
-
 end
 

@@ -2,11 +2,14 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib/page_view'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 
 Bundler.require(:default, :test)
-Mongoid.database = Mongo::Connection.new.db('gts_test')
 
 require 'rspec'
 require 'g5_page_view'
 require 'search_engine'
+
+@mongoid_settings = YAML.load(File.new(File.dirname(__FILE__)+"/../mongoid.yml"))["test"] 
+
+G5PageView.configure{|config| config.from_hash(@mongoid_settings) }
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.

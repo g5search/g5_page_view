@@ -58,7 +58,7 @@ class PageView
 
   private
   def attribute_traffic
-    TrafficAttributionFactory.update!(self)
+    TrafficAttributionFactory.new.update!(self)
   end
   
   def set_save_time

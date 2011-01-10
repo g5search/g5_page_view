@@ -20,7 +20,9 @@ describe PageView do
 
   context 'Attributing traffic to source,channel,campaign' do
     it "should attribute the traffic before saving" do
-      TrafficAttributionFactory.should_receive(:update!).with(@pv)
+      traffic = TrafficAttributionFactory.new
+      TrafficAttributionFactory.stub!(:new).and_return(traffic)
+      traffic.should_receive(:update!).with(@pv)
       @pv.save
     end
   end

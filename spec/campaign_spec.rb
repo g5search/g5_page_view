@@ -2,12 +2,6 @@ require 'spec_helper'
 
 describe Campaign do
   describe "Parsing" do
-    before(:all) do
-      Seeds::SearchEngineSeed.execute
-    end
-    after(:all) do
-      Seeds::SearchEngineSeed.undo
-    end
     
     it "should not have an engine if there is no matching campaign" do
       Campaign.parse('foobarsda1').should be_nil      
