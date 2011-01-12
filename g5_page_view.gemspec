@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["G5"]
-  s.date = %q{2011-01-05}
+  s.date = %q{2011-01-11}
   s.description = %q{Model for storage of page view details}
   s.email = %q{engineering@g5platform.com}
   s.extra_rdoc_files = [
@@ -23,11 +23,13 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION",
+    "g5_page_view.gemspec",
     "lib/g5_page_view.rb",
     "lib/page_view/campaign.rb",
     "lib/page_view/page_view.rb",
     "lib/page_view/search_engine.rb",
     "lib/page_view/traffic_attribution_factory.rb",
+    "mongoid.yml",
     "spec/campaign_spec.rb",
     "spec/page_view_spec.rb",
     "spec/search_engine.rb",
