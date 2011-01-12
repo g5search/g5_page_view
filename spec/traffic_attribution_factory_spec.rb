@@ -1,15 +1,15 @@
 require "spec_helper"
 
-describe TrafficAttributionFactory do
+describe G5PageView::TrafficAttributionFactory do
 
   before(:each) do
-    @traffic = TrafficAttributionFactory.new
+    @traffic = G5PageView::TrafficAttributionFactory.new
   end
 
   describe "Sources" do
     before(:each) do
       @cpm='glsda1'
-      @page_view= PageView.new(
+      @page_view= G5PageView::PageView.new(
         :url=>'http://storquest.com',
         :referring_url=>'http://google.com?cpm='+@cpm,
         :cpm=>@cpm
@@ -19,7 +19,7 @@ describe TrafficAttributionFactory do
 
     context "with a campaign (cpm)" do
       it "retrieves the source from the cpm" do
-        Campaign.should_receive(:parse).with(@page_view.cpm).and_return('google.com')
+        G5PageView::Campaign.should_receive(:parse).with(@page_view.cpm).and_return('google.com')
         @traffic.update!(@page_view)
         @page_view.source.should eql('google.com')
       end
@@ -28,7 +28,7 @@ describe TrafficAttributionFactory do
     context "With a referring domain" do
       before(:each) do
         @page_view.cpm=''
-        @engine= SearchEngine.new(:source_host=>'bing.com')
+        @engine= G5PageView::SearchEngine.new(:source_host=>'bing.com')
       end
       it "retrieves the search engine as the source when the request originated from a known search engine" do
         @traffic.should_receive(:search_engine).exactly(2).times.and_return(@engine)
@@ -57,14 +57,14 @@ describe TrafficAttributionFactory do
   describe "Channels" do
     before(:each) do
       @traffic.stub!(:set_source)
-      @page_view= PageView.new(
+      @page_view= G5PageView::PageView.new(
         :url=>'http://storquest.com',
         :referring_url=>'http://google.com'
       )
-      @paid= AVAILABLE_CHANNELS.fetch('paid')
-      @organic= AVAILABLE_CHANNELS.fetch('organic')
-      @direct= AVAILABLE_CHANNELS.fetch('direct')
-      @referral= AVAILABLE_CHANNELS.fetch('referral')
+      @paid= G5PageView::AVAILABLE_CHANNELS.fetch('paid')
+      @organic= G5PageView::AVAILABLE_CHANNELS.fetch('organic')
+      @direct= G5PageView::AVAILABLE_CHANNELS.fetch('direct')
+      @referral= G5PageView::AVAILABLE_CHANNELS.fetch('referral')
     end
 
     context 'Checks in succession' do
@@ -101,7 +101,7 @@ describe TrafficAttributionFactory do
 
     describe 'An organic channel' do
       before(:each) do
-        SearchEngine.find_or_create_by(:source_host=>'maps.google.com')
+        G5PageView::SearchEngine.find_or_create_by(:source_host=>'maps.google.com')
         @page_view.cpm=nil
         @traffic.update!(@page_view)
       end
@@ -147,10 +147,10 @@ describe TrafficAttributionFactory do
     context 'search engine lookup' do
       it 'will look up search engine once for a known engine' do
         @traffic.search_engine = nil
-        se = SearchEngine.new(:search_engine => 'storeme', :source_host => 'searchme', :campaign_rule=>'ins')   
-        SearchEngine.should_receive(:find).once.and_return(se)
+        se = G5PageView::SearchEngine.new(:search_engine => 'storeme', :source_host => 'searchme', :campaign_rule=>'ins')   
+        G5PageView::SearchEngine.should_receive(:find).once.and_return(se)
         @traffic.search_engine("searchme").should_not be_nil
-        SearchEngine.should_not_receive(:find)
+        G5PageView::SearchEngine.should_not_receive(:find)
         @traffic.search_engine("searchme").should_not be_nil
       end
     end

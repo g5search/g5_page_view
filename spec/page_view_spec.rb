@@ -1,8 +1,8 @@
 require "spec_helper"
 
-describe PageView do
+describe G5PageView::PageView do
   before do
-    @pv = PageView.new(:visitor_cookie =>"acookie", :url=>"http://someurl.com", :session_id=>"123")
+    @pv = G5PageView::PageView.new(:visitor_cookie =>"acookie", :url=>"http://someurl.com", :session_id=>"123")
   end
 
   it "should parse the domain for the request" do
@@ -20,8 +20,8 @@ describe PageView do
 
   context 'Attributing traffic to source,channel,campaign' do
     it "should attribute the traffic before saving" do
-      traffic = TrafficAttributionFactory.new
-      TrafficAttributionFactory.stub!(:new).and_return(traffic)
+      traffic = G5PageView::TrafficAttributionFactory.new
+      G5PageView::TrafficAttributionFactory.stub!(:new).and_return(traffic)
       traffic.should_receive(:update!).with(@pv)
       @pv.save
     end
@@ -51,14 +51,14 @@ describe PageView do
 
   context "validations" do
     it "should require url to be present" do
-      pv = PageView.new(:session_id=>'123')
+      pv = G5PageView::PageView.new(:session_id=>'123')
       pv.save
       pv.should_not be_valid
       pv.errors.on(:url).should == "can't be blank"
     end
 
     it "should require session_id to be present" do
-      pv = PageView.new(:url=>"foobar")
+      pv = G5PageView::PageView.new(:url=>"foobar")
       pv.save
       pv.should_not be_valid
       pv.errors.on(:session_id).should == "can't be blank"
