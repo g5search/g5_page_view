@@ -4,7 +4,7 @@ source "http://gems.g5search.com"
 
 gem "mongo",    "1.0.9"
 gem "bson",     "1.0.9"
-gem "bson_ext", '1.0.9'
+gem "bson_ext", "1.0.9"
 gem "mongoid",  "1.9.2"
 
 group :development, :test do
