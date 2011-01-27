@@ -1,6 +1,7 @@
 module G5PageView
   class SearchEngine
     include Mongoid::Document
+    self.collection_name = "search_engines"
 
     field :search_engine
     field :source_host
