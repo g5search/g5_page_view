@@ -3,18 +3,11 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'mongoid'
 
 module G5PageView
-
   class << self
-
     def configure
       config = Mongoid::Config.instance
       block_given? ? yield(config) : config
       Dir["#{File.dirname(__FILE__)}/page_view/*.rb"].each {|f| require f}
-
-      # require 'page_view/page_view'
-      # require 'page_view/search_engine'
-      # require 'page_view/campaign'
-      # require 'page_view/traffic_attribution_factory'
     end
 
     alias :config :configure

@@ -3,6 +3,7 @@ module G5PageView
     include Mongoid::Document
     attr_accessor :referring_domain
 
+    self.collection_name = "page_views"
     field :client_id
     field :store_id
     field :session_id
