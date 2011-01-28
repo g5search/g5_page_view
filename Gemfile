@@ -2,8 +2,9 @@ source :gemcutter
 source "http://gems.github.com"
 source "http://gems.g5search.com"
 
-gem "mongoid",  "1.9.2"
-gem "bson_ext", "~> 1.0.1"
+#gem "mongoid",  "1.9.2"
+gem "mongoid",  :git => "https://github.com/mongoid/mongoid.git", :branch=>'master'
+gem "bson_ext", "~> 1.1"
 
 group :development, :test do
   gem "rspec", "~> 2.3.0"

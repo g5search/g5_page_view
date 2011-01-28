@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{g5_page_view}
-  s.version = "1.0.0"
+  s.version = "1.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["G5"]
-  s.date = %q{2011-01-26}
+  s.date = %q{2011-01-28}
   s.description = %q{Model for storage of page view details}
   s.email = %q{engineering@g5platform.com}
   s.extra_rdoc_files = [
@@ -39,7 +39,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/steveburkett/g5_page_view}
   s.licenses = ["none"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.4.1}
+  s.rubygems_version = %q{1.3.7}
   s.summary = %q{G5 page view}
   s.test_files = [
     "spec/campaign_spec.rb",
@@ -50,24 +50,25 @@ Gem::Specification.new do |s|
   ]
 
   if s.respond_to? :specification_version then
+    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<mongoid>, ["= 1.9.2"])
-      s.add_runtime_dependency(%q<bson_ext>, ["~> 1.0.1"])
+      s.add_runtime_dependency(%q<mongoid>, [">= 0"])
+      s.add_runtime_dependency(%q<bson_ext>, ["~> 1.1"])
       s.add_development_dependency(%q<rspec>, ["~> 2.3.0"])
       s.add_development_dependency(%q<ruby-debug>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, [">= 0"])
     else
-      s.add_dependency(%q<mongoid>, ["= 1.9.2"])
-      s.add_dependency(%q<bson_ext>, ["~> 1.0.1"])
+      s.add_dependency(%q<mongoid>, [">= 0"])
+      s.add_dependency(%q<bson_ext>, ["~> 1.1"])
       s.add_dependency(%q<rspec>, ["~> 2.3.0"])
       s.add_dependency(%q<ruby-debug>, [">= 0"])
       s.add_dependency(%q<jeweler>, [">= 0"])
     end
   else
-    s.add_dependency(%q<mongoid>, ["= 1.9.2"])
-    s.add_dependency(%q<bson_ext>, ["~> 1.0.1"])
+    s.add_dependency(%q<mongoid>, [">= 0"])
+    s.add_dependency(%q<bson_ext>, ["~> 1.1"])
     s.add_dependency(%q<rspec>, ["~> 2.3.0"])
     s.add_dependency(%q<ruby-debug>, [">= 0"])
     s.add_dependency(%q<jeweler>, [">= 0"])
