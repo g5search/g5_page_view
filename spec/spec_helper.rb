@@ -10,6 +10,6 @@ RSpec.configure do |config|
     end
 
 	config.after :all do
-    @@mongo.database('gts_test').collections.each{|coll| coll.remove unless coll.name =~ /system/ }	  
+    @@mongo.db('gts_test').collections.each{|coll| coll.remove unless coll.name =~ /system/ }	  
 	end
 end

@@ -1,19 +1,22 @@
 module G5PageView
-  class SearchEngine < ::Mongo::Collection
-    def initialize(fields={})
-      @fields= fields
-      super(:search_engines, @@mongo.db('gts_test'))
+  class SearchEngine < ::Hash
+    def collection
+      @collection ||= @@mongo.db('gts_test')['search_engines']  
     end
     
-    def required_fields
+    def required_fields 
       [:search_engine, :source_host, :keyword_param, :campaign_rule]
     end
     
-    # key :source_host
-    def save
-      required_fields.each{|r| raise Exception unless @fields[r] }
-      super(@fields)
+    def save!
+      required_fields.each do |r| 
+        unless (self[r] || self[r.to_s])
+          raise Exceptions::MissingFields.new(required_fields, self.to_s) 
+        end
+      end
+      self.collection.insert(self)
     end
   end
 end
+
 
