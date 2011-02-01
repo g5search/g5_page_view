@@ -12,7 +12,7 @@ module G5PageView
     end
 
     def self.engines
-      @engines ||= SearchEngine.all.only(:source_host, :campaign_rule)
+      @engines ||= @@mongodb.db('gts_production')['search_engines'].find({:fields=>[:source_host, :campaign_rule]}).collect{|s| s}
     end
   end
 end
