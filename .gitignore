@@ -10,8 +10,9 @@ doc
 
 # bundler
 .bundle
-
+pkg/*
 Gemfile.lock
+
 
 # For MacOS:
 #
