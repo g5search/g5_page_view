@@ -1,7 +1,7 @@
 module G5PageView
   class SearchEngine < ::Hash
     def collection
-      @collection ||= @@mongo.db('gts_test')['search_engines']  
+      @collection ||= G5PageView.connection.db('gts_test')['search_engines']  
     end
     
     def required_fields 

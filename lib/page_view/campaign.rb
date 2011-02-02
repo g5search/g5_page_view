@@ -12,7 +12,7 @@ module G5PageView
     end
 
     def self.engines
-      @engines ||= @@mongo.db('gts_test')['search_engines'].find({}, {:fields=>[:source_host, :campaign_rule]}).collect{|s| s}
+      @engines ||= G5PageView.connection.db('gts_test')['search_engines'].find({}, {:fields=>[:source_host, :campaign_rule]}).collect{|s| s}
     end
   end
 end

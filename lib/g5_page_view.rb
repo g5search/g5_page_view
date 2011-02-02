@@ -1,18 +1,23 @@
 require 'mongo'
 require 'bson'
 
-@@mongo= Mongo::ReplSetConnection.new(['localhost', 27017])
-
 module G5PageView
-  def self.connection
-    @@connection
-  end
+  class << self
+    def connection
+      @connection
+    end
 
-  def self.connect!(config={})
-    options = config.inject({}) { |memo, (k, v)| memo[k.to_sym] = v; memo}
-    nodes= options.delete(:nodes)
-    raise "Invalid nodes specified" unless nodes && nodes.respond_to?(:<<)
-    @@connection= Mongo::ReplSetConnection.new(*(nodes << options))
+    def db
+      # db= config['database_name']
+      # @@db ||= self.connection[db]
+    end
+
+    def connect!(config={})
+      options = config.inject({}) { |memo, (k, v)| memo[k.to_sym] = v; memo}
+      nodes= options.delete(:nodes)
+      raise "Invalid nodes specified" unless nodes && nodes.respond_to?(:<<)
+      @connection= Mongo::ReplSetConnection.new(*(nodes << options))
+    end
   end
 end
 

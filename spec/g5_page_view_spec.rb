@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe G5PageView do
+  before(:each) do
+    @real_connection= G5PageView.connection
+  end
+  
   describe "Connection" do
     it "raise an error if no nodes are specified" do
       lambda{ G5PageView.connect!({:nodes=>nil}) }.should raise_error('Invalid nodes specified')
@@ -18,7 +22,7 @@ describe G5PageView do
     
     it "should connect with the symbolized configs" do
       config= {"test"=>{"nodes"=>[["localhost", "27017"]], "rs_name"=>'gts_replica_test'}}
-      Mongo::ReplSetConnection.should_receive(:new).with(["localhost", "27017"], {:rs_name=>'gts_replica_test'})
+      Mongo::ReplSetConnection.should_receive(:new).with(["localhost", "27017"], {:rs_name=>'gts_replica_test'}).and_return(@real_connection)
       G5PageView.connect!(config['test'])
     end
   end

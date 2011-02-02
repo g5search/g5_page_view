@@ -21,12 +21,12 @@ module Seeds
           ]
         
         search_engines.each do |se| 
-          @@mongo.db('gts_test').collection('search_engines').update({:source_host=>se[:source_host]}, se, :upsert=>true)
+          G5PageView.connection.db('gts_test').collection('search_engines').update({:source_host=>se[:source_host]}, se, :upsert=>true)
         end
       end
   
       def undo
-        @@mongo.db('gts_test').collection('search_engines').remove({})
+        G5PageView.connection.db('gts_test').collection('search_engines').remove({})
       end
     end
   end
