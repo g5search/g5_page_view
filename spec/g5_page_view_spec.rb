@@ -18,7 +18,7 @@ describe G5PageView do
       it "gets the database when connected" do
         G5PageView::connect!(@config)
         db= G5PageView::db
-        db.name.should eql(G5PageView::config['database'])
+        db.name.should eql(G5PageView::config[:database])
       end
     end
     

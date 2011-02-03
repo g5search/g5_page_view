@@ -19,8 +19,7 @@ module G5PageView
       validate_required!
       self.created_at = Time.now unless self[:created_at]
       attribute_traffic!
-      result= self.class.collection.insert(self)
-      self.merge!('_id'=>result.to_s)
+      self.class.collection.insert(self)
     end
 
     def created_at=(time)

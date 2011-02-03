@@ -6,7 +6,8 @@ module G5PageView
     attr_reader :connection, :db, :config
 
     def connect!(config={})
-      options = Marshal.load(Marshal.dump(config.inject({}) { |memo, (k, v)| memo[k.to_sym] = v; memo}))      
+      config= config.inject({}) { |memo, (k, v)| memo[k.to_sym] = v; memo}
+      options = Marshal.load(Marshal.dump(config))      
       nodes= options.delete(:nodes)
       raise "Invalid nodes specified" unless nodes && nodes.respond_to?(:<<)
       @connection= Mongo::ReplSetConnection.new(*(nodes << options))
@@ -15,8 +16,8 @@ module G5PageView
     
     def configure!(config={})
       @config = config
-      raise 'No database specified' unless @config.has_key?('database')
-      @db = @connection[@config['database']] 
+      raise 'No database specified' unless @config.has_key?(:database)
+      @db = @connection[@config[:database]] 
     end
   end
 end
