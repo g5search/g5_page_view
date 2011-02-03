@@ -14,6 +14,6 @@ RSpec.configure do |config|
     end
 
 	config.after :all do
-    G5PageView.connection.db('gts_test').collections.each{|coll| coll.remove unless coll.name =~ /system/ }	  
+    G5PageView::db.collections.each{|coll| coll.remove unless coll.name =~ /system/ }	  
 	end
 end

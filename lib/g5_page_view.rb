@@ -3,16 +3,14 @@ require 'bson'
 
 module G5PageView
   class << self
-    def connection
-      @connection
-    end
+    attr_reader :connection, :db, :config
 
     def db
-      # db= config['database_name']
-      # @@db ||= self.connection[db]
+      @db ||= self.connection[self.config['database']]
     end
 
     def connect!(config={})
+      @config ||= config
       options = config.inject({}) { |memo, (k, v)| memo[k.to_sym] = v; memo}
       nodes= options.delete(:nodes)
       raise "Invalid nodes specified" unless nodes && nodes.respond_to?(:<<)
