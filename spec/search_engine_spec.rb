@@ -29,18 +29,13 @@ describe G5PageView::SearchEngine do
         end        
       end
     end
-    
-    it "raise a MissingField exception regardless of key type (String/Symbol)" do
-      search_engine= G5PageView::SearchEngine['search_engine', 'google', 'source_host', 'www.google.com', 'keyword_param', 'q', 'campaign_rule', 'q']
-      @required_fields_assertion.call(search_engine)
-    end
 
     it "should raise a MissingField exception if any of the required fields aren't set" do
       @required_fields_assertion.call(@search_engine)
     end
 
     it "should insert the search engine with the specified fields" do
-      expect { @valid.save! }.to change(@valid.collection, :count).by(1)
+      expect { @valid.save! }.to change(G5PageView::SearchEngine.collection, :count).by(1)
     end
   end
 end

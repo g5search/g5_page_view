@@ -1,5 +1,6 @@
 require 'g5_page_view'
 require 'yaml'
+require 'ruby-debug'
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.
@@ -8,7 +9,7 @@ require 'yaml'
 config= YAML::load(File.new(File.dirname(__FILE__)+'/config.yml'))
 G5PageView::connect!(config['test'])
 
-RSpec.configure do |config|
+RSpec.configure do |config|    
     config.before :all do
       Seeds::SearchEngineSeed.execute
     end

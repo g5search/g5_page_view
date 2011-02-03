@@ -1,8 +1,6 @@
 require 'mongo'
 require 'bson'
 
-require 'ruby-debug'
-
 module G5PageView
   class << self
     attr_reader :connection, :db, :config
@@ -30,6 +28,10 @@ Dir["#{File.dirname(__FILE__)}/seeds/**/*.rb"].each {|f| require f}
 
 #Load custom exception classes
 require 'exceptions/exception'
+
+#Mongo Driver helpers
+require 'page_view/validations'
+require 'page_view/finders'
 
 require 'page_view/search_engine'
 require 'page_view/campaign'

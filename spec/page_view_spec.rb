@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe G5PageView::PageView do
   before do
-    @pv = G5PageView::PageView.new(:visitor_cookie =>"acookie", :url=>"http://someurl.com", :session_id=>"123")
+    @pv = G5PageView::PageView[:visitor_cookie, "acookie", :url, "http://someurl.com", :session_id, "123"]
   end
 
   it "should parse the domain for the request" do
@@ -10,7 +10,7 @@ describe G5PageView::PageView do
   end
   
   it "should parse the domain for the previous request" do
-    @pv.referring_url='http://www.google.com'
+    @pv[:referring_url]='http://www.google.com'
     @pv.referring_domain.should eql('www.google.com')
   end
   
@@ -23,45 +23,37 @@ describe G5PageView::PageView do
       traffic = G5PageView::TrafficAttributionFactory.new
       G5PageView::TrafficAttributionFactory.stub!(:new).and_return(traffic)
       traffic.should_receive(:update!).with(@pv)
-      @pv.save
+      @pv.save!
     end
   end
 
   context "date & time split" do
+    def reload_page_view(page_view)
+      G5PageView::PageView.first('_id'=>page_view[:_id])
+    end
     before(:each) do
       @time_now = Time.now
       Time.stub!(:now).and_return(@time_now)
     end
-
+    
     it "splits saved time into t as float and d as formatted date" do
+      @pv.created_at=@time_now
       @pv.save!
-      @pv.reload
-      @pv.created_at.to_i.should eql(@time_now.to_i)
-      @pv.sequence.should eql(@time_now.to_f)
-    end
-
-    it "should use the created_at if set (and set the sequence)" do
-      created_at= Time.now
-      @pv.created_at= created_at
-      @pv.save
-      @pv.created_at.to_i.should eql(created_at.to_i)
-      @pv.sequence.should eql(created_at.to_f)
+      page_view= reload_page_view(@pv)
+      page_view['created_at'].to_i.should eql(@time_now.to_i)
+      page_view['sequence'].should eql(@time_now.to_f)
     end
   end
 
   context "validations" do
     it "should require url to be present" do
-      pv = G5PageView::PageView.new(:session_id=>'123')
-      pv.save
-      pv.should_not be_valid
-      pv.errors.on(:url).should == "can't be blank"
+      pv = G5PageView::PageView[:session_id=>'123']
+      lambda{ pv.save! }.should raise_error(G5PageView::Exceptions::MissingFields)
     end
 
     it "should require session_id to be present" do
-      pv = G5PageView::PageView.new(:url=>"foobar")
-      pv.save
-      pv.should_not be_valid
-      pv.errors.on(:session_id).should == "can't be blank"
+      pv = G5PageView::PageView[:url=>"foobar"]
+      lambda{ pv.save! }.should raise_error(G5PageView::Exceptions::MissingFields)
     end
   end
 end

@@ -16,10 +16,10 @@ module G5PageView
     end
 
     def set_source(page_view)
-      page_view.source= if present?(page_view.cpm)
-                          Campaign.parse(page_view.cpm)
+      page_view[:source]= if present?(page_view[:cpm])
+                          Campaign.parse(page_view[:cpm])
                         elsif self.search_engine(page_view.referring_domain)
-                          self.search_engine.source_host
+                          self.search_engine[:source_host]
                         else
                           page_view.referring_domain
                         end
@@ -35,11 +35,11 @@ module G5PageView
         channel= self.send(method, page_view)
         break if channel
       end
-      page_view.channel= channel
+      page_view[:channel]= channel
     end
 
     def paid?(page_view)
-      present?(page_view.cpm){ AVAILABLE_CHANNELS.fetch('paid') }
+      present?(page_view[:cpm]){ AVAILABLE_CHANNELS.fetch('paid') }
     end
 
     def direct?(page_view)
@@ -53,8 +53,8 @@ module G5PageView
     end
 
     def search_engine(referring_domain='')
-      return @search_engine if ( @search_engine && @search_engine.source_host == referring_domain )
-      @search_engine = SearchEngine.find(:first, :conditions=>{:source_host=>referring_domain}) 
+      return @search_engine if ( @search_engine && @search_engine['source_host'] == referring_domain )
+      @search_engine = SearchEngine.first({'source_host'=>referring_domain}) 
     end
 
     def referral?(page_view)
