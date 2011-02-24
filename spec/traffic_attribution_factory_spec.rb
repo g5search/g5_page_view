@@ -31,7 +31,7 @@ describe G5PageView::TrafficAttributionFactory do
         @engine= G5PageView::SearchEngine[:source_host, 'bing.com']
       end
       it "retrieves the search engine as the source when the request originated from a known search engine" do
-        @traffic.should_receive(:search_engine).exactly(2).times.and_return(@engine)
+        @traffic.should_receive(:search_engine).exactly(1).times.and_return(@engine)
         @traffic.update!(@page_view)
         @page_view[:source].should eql('bing.com')        
       end
