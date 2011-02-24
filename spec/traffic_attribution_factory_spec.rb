@@ -25,10 +25,22 @@ describe G5PageView::TrafficAttributionFactory do
       end
     end
 
+    context "source from referring url" do  
+      it "get the source from the referring URL" do
+        pw = G5PageView::PageView[
+          :url, 'http://storquest.com',
+          :referring_url,'http://www.google.com/url?sa=t&source=web&cd=1&ved=0CCkQoAIwAA&url=http%3A%2F%2Fwww.storageexpress.com%2F&rct=j&q=storage%20units%20princeton%20IN&ei=WtRlTbzeIJSDtgfGhLXsBg&usg=AFQjCNHJfPYDeI5wHIVMBzMHnSCAT2FCcw',
+          :cpm,nil
+        ]
+        @traffic.update!(pw)
+        pw[:source].should eql('www.google.com')        
+      end
+    end
+
     context "With a referring domain" do
       before(:each) do
         @page_view[:cpm]=''
-        @engine= G5PageView::SearchEngine[:source_host, 'bing.com']
+        @engine= G5PageView::SearchEngine['source_host', 'bing.com']
       end
       it "retrieves the search engine as the source when the request originated from a known search engine" do
         @traffic.should_receive(:search_engine).exactly(1).times.and_return(@engine)

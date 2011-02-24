@@ -18,8 +18,8 @@ module G5PageView
     def set_source(page_view)
       page_view[:source]= if present?(page_view[:cpm])
                           Campaign.parse(page_view[:cpm])
-                        elsif local_engine= self.search_engine(page_view.referring_domain)
-                          local_engine[:source_host]
+                        elsif local = self.search_engine(page_view.referring_domain)
+                          local["source_host"]
                         else
                           page_view.referring_domain
                         end
