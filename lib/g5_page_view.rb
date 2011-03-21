@@ -9,7 +9,7 @@ module G5PageView
       return config.inject({}) { |memo, (k, v)| memo[k.to_sym] = v; memo}
     end
     
-    def reconnect!(config={})
+    def reconnect!
       connect!(config)
     end
 
