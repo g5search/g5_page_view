@@ -5,8 +5,16 @@ module G5PageView
   class << self
     attr_reader :connection, :db, :config
 
+    def symbolize(config={})
+      return config.inject({}) { |memo, (k, v)| memo[k.to_sym] = v; memo}
+    end
+    
+    def reconnect!(config={})
+      connect!(config)
+    end
+
     def connect!(config={})
-      config= config.inject({}) { |memo, (k, v)| memo[k.to_sym] = v; memo}
+      config= symbolize(config)
       options = Marshal.load(Marshal.dump(config))      
       nodes= options.delete(:nodes)
       raise "Invalid nodes specified" unless nodes && nodes.respond_to?(:<<)
