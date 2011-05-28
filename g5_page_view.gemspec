@@ -19,16 +19,16 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "bundler", ">= 1.0.3"
 
-  s.files        = `git ls-files`.split("\n")  
+  s.files        = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables  = `git ls-files`.split("\n").select{|f| f =~ /^bin/}
   s.require_path = 'lib'
 
   #Defaults
   s.add_runtime_dependency('rake')
-  s.add_runtime_dependency("mongo", "~> 1.2.0")
-  s.add_runtime_dependency("bson", "~> 1.2.0")
-  s.add_runtime_dependency("bson_ext", "~> 1.2.0")
+  s.add_runtime_dependency("mongo", "1.2.4")
+  s.add_runtime_dependency("bson", "1.2.4")
+  s.add_runtime_dependency("bson_ext", "1.2.4")
   
   #Dev/Test
   s.add_development_dependency("rspec", "~> 2.3.0")
