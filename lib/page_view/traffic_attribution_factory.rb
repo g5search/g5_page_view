@@ -13,6 +13,13 @@ module G5PageView
     def update!(page_view)
       set_channel(page_view)
       set_source(page_view)
+      set_mobile(page_view)
+    end
+
+    def set_mobile(page_view)
+      if page_view[:http_agent] 
+        page_view[:is_mobile] = page_view[:http_agent].match(/iphone|ipod|ipad|blackberry|android|palm|webos|windows\s+ce/i) != nil 
+      end
     end
 
     def set_source(page_view)

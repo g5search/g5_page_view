@@ -26,3 +26,6 @@ Gemfile.lock
 #
 # For vim:
  *.swp
+
+#for rubymine
+.idea

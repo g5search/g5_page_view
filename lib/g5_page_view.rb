@@ -17,11 +17,22 @@ module G5PageView
       config= symbolize(config)
       options = Marshal.load(Marshal.dump(config))      
       nodes= options.delete(:nodes)
+      db= options.delete(:database)
       raise "Invalid nodes specified" unless nodes && nodes.respond_to?(:<<)
-      @connection= Mongo::ReplSetConnection.new(*(nodes << options))
-      configure!(config)
+      @connection = mongo_connect(nodes, options)
+      @db = @connection.db(db)
     end
-    
+
+    def mongo_connect(nodes, options)
+      begin
+        connection = Mongo::ReplSetConnection.new(nodes, options)
+      rescue Mongo::ConnectionFailure => e
+        hostport = nodes[0].split(":")
+        connection= Mongo::Connection.new(hostport[0], hostport[1])
+      end
+      connection
+    end
+
     def configure!(config={})
       @config = config
       raise 'No database specified' unless @config.has_key?(:database)

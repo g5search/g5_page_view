@@ -1,10 +1,10 @@
 defaults: &defaults
-  nodes: [['localhost', '27017']]
+  nodes: ['localhost:27017']
 
 production:
   database: 'gts_production'
-  nodes: [['tm26-s00225', '27017'], ['tm26-s00247', '27017'], ['tm26-s00186', '27017']]
-  rs_name: 'gts_replica'
+  nodes: ['tm26-s00225:27017', 'tm26-s00247:27017', 'tm26-s00186:27017']
+  name: 'gts_replica'
   <<: *defaults
   
 development:
@@ -12,7 +12,6 @@ development:
   <<: *defaults
   
 test:
-  <<: *defaults
   database: 'gts_test'
-  
-  
+  <<: *defaults
+
