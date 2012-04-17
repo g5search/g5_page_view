@@ -21,6 +21,7 @@ module G5PageView
       raise "Invalid nodes specified" unless nodes && nodes.respond_to?(:<<)
       @connection = mongo_connect(nodes, options)
       @db = @connection.db(db)
+      @config = config
     end
 
     def mongo_connect(nodes, options)
@@ -31,12 +32,6 @@ module G5PageView
         connection= Mongo::Connection.new(hostport[0], hostport[1])
       end
       connection
-    end
-
-    def configure!(config={})
-      @config = config
-      raise 'No database specified' unless @config.has_key?(:database)
-      @db = @connection[@config[:database]] 
     end
   end
 end
