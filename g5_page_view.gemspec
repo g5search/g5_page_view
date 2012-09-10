@@ -26,9 +26,9 @@ Gem::Specification.new do |s|
 
   #Defaults
   s.add_runtime_dependency('rake')
-  s.add_runtime_dependency("mongo", "1.6.1")
-  s.add_runtime_dependency("bson", "1.6.1")
-  s.add_runtime_dependency("bson_ext", "1.6.1")
+  s.add_runtime_dependency("mongo", "1.6.4")
+  s.add_runtime_dependency("bson", "1.6.4")
+  s.add_runtime_dependency("bson_ext", "1.6.4")
   
   #Dev/Test
   s.add_development_dependency("rspec", "~> 2.3.0")
